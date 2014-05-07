@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <time.h>
 
 #include "vector.h"
 #include "k-nearest-neigbhour-calc.h"
@@ -22,6 +23,12 @@ int main(){
 	// benoetigt fuer Menuauswahl
 	char inputChoice = '\0';
 
+	// Zeit messen
+	// http://stefanhermann.com/?p=10
+	//Definierung der Zeit-Variablen
+	clock_t ClockStartSort;
+	clock_t ClockEndSort;
+	float neededTime = 0;
 
 	while(true){
 		cout << "Was wollen Sie tun?\n";
@@ -58,8 +65,12 @@ int main(){
 				break;
 			// berechne kleinsten Abstand Vektoren aus Datei - Referenzvektor, zurueckgegeben wird Klasse des naehsten Vektors
 			case 'n':
+				ClockStartSort = clock(); //CPU-Zeit zu Beginn des Programmes
 				clas = calcKNearstNeighbour(ReferenzVektor);
 				cout << "\nKlasse: " << clas << "\n\n";
+				ClockEndSort=clock(); //CPU-Zeit am Ende des Programmes
+				neededTime = (float)(ClockEndSort-ClockStartSort) / CLOCKS_PER_SEC; // Differenz Ende-Start -> Laufzeit
+				cout << "Benoetigte Zeit: " << neededTime << "s\n\n";
 				break;
 			// Verlassen
 			case 'q':
